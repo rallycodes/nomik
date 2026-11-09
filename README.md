@@ -1,14 +1,8 @@
 <div align="center">
 
-```
- _   _  ____  __  __ ___ _  __
-| \ | |/ __ \|  \/  |_ _| |/ /
-|  \| | |  | | |\/| || || ' / 
-| |\  | |__| | |  | || || . \ 
-|_| \_|\____/|_|  |_|___|_|\_\
-```
+<img src="assets/banner.svg" alt="Nomik: The Billion-Dollar Brand Naming & Domain Engine" width="100%" />
 
-### The Billion-Dollar Brand Naming & Domain Agency in an Agent Skill.
+<br/>
 
 [![Skills.sh](https://img.shields.io/badge/skills.sh-nomik-10B981?style=for-the-badge&logo=codeforces&logoColor=white)](https://skills.sh)
 [![Created by Raul Aliyev](https://img.shields.io/badge/Author-Raul%20Aliyev%20(%40rallycodes)-8B5CF6?style=for-the-badge)](https://github.com/rallycodes)
@@ -58,6 +52,33 @@ Once installed, simply type **`/nomik`** in your AI chat:
 > `/nomik` -> Launches the interactive 3-question naming wizard  
 > `/nomik high-performance distributed key-value store in Rust` -> Executes full 6-step agency pipeline  
 > `/nomik audit kyntic` -> Instantly runs domains, handles, phonetics, and trademark check  
+
+### Updating Nomik
+Keep your local skill and CLI synchronized with the latest agency updates with one command:
+```bash
+npx nomik update
+```
+*(Or `npx skills update` across your entire agent suite).*
+
+---
+
+## 🧬 The Origin: The AI That Named Itself
+
+Before this skill had a name, it was an unnamed, ruthless naming engine built to eliminate AI slop. 
+
+We gave the engine its own brief:
+> *"Name an agency-grade brand naming, domain intelligence, and phonosemantics skill that rivals Lexicon Branding and Pentagram. No cheap portmanteaus. No -ify. Must pass the Radio Test with verified open domains."*
+
+The engine generated 5 candidate finalists across its 7 taxonomies (*Callsign, Onoma, NameFoundry, Morpheme, Nomik*).
+
+It audited itself:
+- **Taxonomy:** Neologism / Morpheme-Engineered (Latin *nomen* + Greek *onoma* + modern terminal plosive *-ik*)
+- **Prosody:** 2 Syllables (Trochaic: `NÓ-mik`), 5 letters
+- **Radio Test Score:** **10.0 / 10** (Zero spelling confusion over phone/podcast)
+- **Visual Rhythm:** **10.0 / 10** (Upward ascender, zero kerning traps)
+- **Domain & Package Audit:** `nomik.app` 🟢, `nomik.io` 🟢, `nomik.so` 🟢, `npm: nomik` 🟢, `pypi: nomik` 🟢
+
+The algorithm selected **Nomik**. The engine proved its own thesis before writing a single line of external documentation.
 
 ---
 

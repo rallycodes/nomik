@@ -3,26 +3,24 @@
 /**
  * Nomik CLI
  * Author: Raul Aliyev (@rallycodes)
- * Zero-dependency CLI runner and agent skill installer.
+ * Zero-dependency CLI runner, brand auditor, and agent skill updater.
  */
 
 const { spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const https = require('https');
 
 const ROOT_DIR = path.resolve(__dirname, '..');
 const SCRIPTS_DIR = path.join(ROOT_DIR, 'scripts');
 
 function printBanner() {
   console.log(`
-\x1b[35m _   _  ____  __  __ ___ _  __\x1b[0m
-\x1b[35m| \\ | |/ __ \\|  \\/  |_ _| |/ /\x1b[0m
-\x1b[35m|  \\| | |  | | |\\/| || || ' / \x1b[0m
-\x1b[35m| |\\  | |__| | |  | || || . \\ \x1b[0m
-\x1b[35m|_| \\_|\\____/|_|  |_|___|_|\\_\\\x1b[0m
-\x1b[1m\x1b[36mNomik: The Billion-Dollar Brand Naming & Domain Engine\x1b[0m
-\x1b[90mCreated by Raul Aliyev (@rallycodes) | Open Source MIT\x1b[0m
+\x1b[38;2;168;85;247m  █▄ █ █▀█ █▀▄▀█ █ █▄▀\x1b[0m
+\x1b[38;2;99;102;241m  █ ▀█ █▄█ █ ▀ █ █ █ █\x1b[0m
+\x1b[1m\x1b[37m  N O M I K\x1b[0m \x1b[90m— Billion-Dollar Brand Naming & Domain Engine\x1b[0m
+\x1b[38;2;16;185;129m  ● The AI skill that named itself\x1b[0m \x1b[90m• by Raul Aliyev (@rallycodes)\x1b[0m
 `);
 }
 
@@ -36,9 +34,25 @@ function runPython(scriptName, args = []) {
   return result.status;
 }
 
-function installSkill(isGlobal = true) {
+function copyRecursive(src, dest) {
+  if (!fs.existsSync(src)) return;
+  const stats = fs.statSync(src);
+  if (stats.isDirectory()) {
+    fs.mkdirSync(dest, { recursive: true });
+    for (const child of fs.readdirSync(src)) {
+      if (child !== '__pycache__' && !child.endsWith('.pyc')) {
+        copyRecursive(path.join(src, child), path.join(dest, child));
+      }
+    }
+  } else {
+    fs.copyFileSync(src, dest);
+  }
+}
+
+function installSkill(isUpdate = false) {
   printBanner();
-  console.log('\x1b[32mInstalling Nomik Skill for AI Agents...\x1b[0m\n');
+  const actionWord = isUpdate ? 'Updating' : 'Installing';
+  console.log(`\x1b[32m${actionWord} Nomik Skill for AI Agents...\x1b[0m\n`);
 
   const targets = [];
   
@@ -62,47 +76,61 @@ function installSkill(isGlobal = true) {
       fs.copyFileSync(path.join(ROOT_DIR, 'SKILL.md'), path.join(target, 'SKILL.md'));
 
       // Copy scripts
-      const scripts = fs.readdirSync(SCRIPTS_DIR);
-      for (const s of scripts) {
-        if (!s.endsWith('.pyc') && !s.startsWith('__pycache__')) {
-          fs.copyFileSync(path.join(SCRIPTS_DIR, s), path.join(target, 'scripts', s));
-        }
-      }
+      copyRecursive(SCRIPTS_DIR, path.join(target, 'scripts'));
 
       // Copy references
       const refDir = path.join(ROOT_DIR, 'references');
       if (fs.existsSync(refDir)) {
-        for (const r of fs.readdirSync(refDir)) {
-          fs.copyFileSync(path.join(refDir, r), path.join(target, 'references', r));
-        }
+        copyRecursive(refDir, path.join(target, 'references'));
       }
 
-      console.log(`\x1b[32m✓ Installed at:\x1b[0m ${target}`);
+      // Copy evals
+      const evalDir = path.join(ROOT_DIR, 'evals');
+      if (fs.existsSync(evalDir)) {
+        copyRecursive(evalDir, path.join(target, 'evals'));
+      }
+
+      console.log(`\x1b[32m✓ Synchronized at:\x1b[0m ${target}`);
     } catch (err) {
-      console.warn(`\x1b[33m! Warning installing to ${target}:\x1b[0m ${err.message}`);
+      console.warn(`\x1b[33m! Warning updating ${target}:\x1b[0m ${err.message}`);
     }
   }
 
+  const successMessage = isUpdate
+    ? `\x1b[1m\x1b[32m[SUCCESS] Nomik skill updated to the latest version!\x1b[0m`
+    : `\x1b[1m\x1b[32m[SUCCESS] Nomik is now active in your AI agent environment!\x1b[0m`;
+
   console.log(`
-\x1b[1m\x1b[32m[SUCCESS] Nomik is now active in your AI agent environment!\x1b[0m
+${successMessage}
 Type \x1b[1m\x1b[36m/nomik\x1b[0m in Claude Code, Antigravity, or Cursor to launch the agency.
 `);
 }
 
+function updateSkill() {
+  // If running inside a git repo of nomik, pull latest first
+  if (fs.existsSync(path.join(ROOT_DIR, '.git'))) {
+    console.log('\x1b[90mChecking for git updates from origin...\x1b[0m');
+    spawnSync('git', ['pull', 'origin', 'main'], { cwd: ROOT_DIR, stdio: 'inherit' });
+  }
+  installSkill(true);
+}
+
 function printHelp() {
   printBanner();
-  console.log(`\x1b[1mUSAGE:\x1b[0m
-  \x1b[36mnpx nomik <brand>\x1b[0m              Run full audit (Domains + Handles + Phonetics)
+  console.log(`\x1b[1mCOMMANDS:\x1b[0m
+  \x1b[36mnpx nomik <brand>\x1b[0m              Run full audit (Domains + Handles + Phonetics + Trademarks)
   \x1b[36mnpx nomik install\x1b[0m              Install /nomik skill into AI agents globally
+  \x1b[36mnpx nomik update\x1b[0m               Update Nomik skill to the latest version
   \x1b[36mnpx nomik domain <brand>\x1b[0m       Check exact domains & pricing across TLDs
   \x1b[36mnpx nomik handles <brand>\x1b[0m      Check GitHub, npm, PyPI, and Crates.io handles
   \x1b[36mnpx nomik tm <brand>\x1b[0m           Run trademark knockout clearance check
-  \x1b[36mnpx nomik phonetics <brand>\x1b[0m    Score phonosemantics, cadence & Radio Test
+  \x1b[36mnpx nomik phonetics <brand>\x1b[0m    Score phonosemantics, cadence & visual rhythm
 
 \x1b[1mEXAMPLES:\x1b[0m
   npx nomik kyntic
   npx nomik stripe.com
   npx nomik install
+  npx nomik update
 `);
 }
 
@@ -116,7 +144,12 @@ function main() {
   }
 
   if (command === 'install') {
-    installSkill();
+    installSkill(false);
+    return;
+  }
+
+  if (command === 'update' || command === 'upgrade') {
+    updateSkill();
     return;
   }
 
