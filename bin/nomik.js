@@ -52,16 +52,19 @@ function installSkill(isUpdate = false) {
   const actionWord = isUpdate ? 'Updating' : 'Installing';
   console.log(`\x1b[32m${actionWord} Nomik Skill for AI Agents...\x1b[0m\n`);
 
-  const targets = [];
-  
-  // Workspace target
-  const workspaceTarget = path.join(process.cwd(), '.agents', 'skills', 'nomik');
-  targets.push(workspaceTarget);
-
-  // Global target
   const homeDir = os.homedir();
-  const globalTarget = path.join(homeDir, '.agents', 'skills', 'nomik');
-  targets.push(globalTarget);
+  const targets = [
+    // 1. Current workspace target
+    path.join(process.cwd(), '.agents', 'skills', 'nomik'),
+    // 2. Standard Global Agents skills
+    path.join(homeDir, '.agents', 'skills', 'nomik'),
+    // 3. Antigravity / Gemini global skills
+    path.join(homeDir, '.gemini', 'skills', 'nomik'),
+    // 4. Antigravity IDE global skills
+    path.join(homeDir, '.gemini', 'antigravity', 'skills', 'nomik'),
+    // 5. Claude Code skills
+    path.join(homeDir, '.claude', 'skills', 'nomik')
+  ];
 
   for (const target of targets) {
     try {
@@ -92,6 +95,32 @@ function installSkill(isUpdate = false) {
     } catch (err) {
       console.warn(`\x1b[33m! Warning updating ${target}:\x1b[0m ${err.message}`);
     }
+  }
+
+  // Register Claude Code slash command if ~/.claude exists
+  const claudeCmdDir = path.join(homeDir, '.claude', 'commands');
+  try {
+    fs.mkdirSync(claudeCmdDir, { recursive: true });
+    const claudeCmdContent = `---
+description: Run the Nomik brand naming and domain intelligence engine
+---
+
+Invoke the Nomik brand naming and domain intelligence engine.
+
+If arguments are provided ($ARGUMENTS), execute the Nomik agency workflow for that brand/concept:
+1. Category counter-positioning
+2. 7 agency taxonomies generation (no clichés, no -ify, passes Radio Test)
+3. Phonosemantic audit & prosody scoring
+4. Real-time domain verification & handles check
+5. Trademark knockout clearance
+6. Executive C-suite dossier
+
+Otherwise, launch the 3-question naming brief wizard.
+`;
+    fs.writeFileSync(path.join(claudeCmdDir, 'nomik.md'), claudeCmdContent, 'utf-8');
+    console.log(`\x1b[32m✓ Registered slash command:\x1b[0m ${path.join(claudeCmdDir, 'nomik.md')}`);
+  } catch (err) {
+    // optional
   }
 
   const successMessage = isUpdate
