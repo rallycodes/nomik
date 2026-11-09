@@ -36,19 +36,16 @@ In reality, almost none of today's iconic decacorns owned their exact `.com` on 
 - **`.co` (Colombia):** Shorter, clean alternative to `.com` (~$25-$35/yr).
 - **`.so` (Somalia):** Minimalist modern darling made famous by Notion (~$28-$38/yr).
 
-### Tier 3: Strategic Modifiers (The Action .com)
-If you are determined to have a `.com` on Day 1 without burning $25,000 in capital, use proven modifier formulas:
-
-1. **Action Verbs (High Conversion):**
-   - `get{brand}.com` (e.g. *getdropbox.com*, *getpocket.com*)
-   - `use{brand}.com` (e.g. *usefathom.com*, *usepastel.com*)
-   - `try{brand}.com` (e.g. *tryloom.com*, *trycursor.com*)
-   - `meet{brand}.com` (e.g. *meetcleo.com*)
-2. **Entity & Product Anchors:**
-   - `{brand}app.com` (e.g. *cashapp.com*, *linearapp.com*)
-   - `{brand}hq.com` (e.g. *basecamp-hq*, *bufferhq.com*)
-   - `{brand}labs.com` (e.g. *kovalabs.com*, *mirage-labs*)
-   - `{brand}tech.com` / `{brand}ai.com`
+### ⚠️ Why Modifiers (`get-`, `-hq`, `-app`) Are Deprecated in 2026
+In early 2010s tech, startups occasionally launched on `getdropbox.com` or `bufferhq.com` before raising funding.
+Today, high-growth founders and customers universally reject modifier hacks:
+- Suffix/prefix modifiers look second-rate, spammy, and convey weak brand confidence.
+- First-class modern extensions (`.ai`, `.io`, `.app`, `.co`, `.so`) are vastly preferred over compromised `.com` hacks:
+  - *Linear* launched on `linear.app` (not *linearhq.com*).
+  - *Perplexity* launched on `perplexity.ai` (not *getperplexity.com*).
+  - *Notion* launched on `notion.so` (not *notionapp.com*).
+  - *Dub* launched on `dub.co` (not *trydub.com*).
+- **Agency Rule:** Never present `{brand}hq.com` or `get{brand}.com` as "domain verified" for a founder. If exact `.com` is taken and clean modern TLDs (`.ai`, `.io`, `.app`) are also taken, **the name is DISQUALIFIED**. Generate a fresh, uncontested candidate.
 
 ---
 

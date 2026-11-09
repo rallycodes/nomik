@@ -86,3 +86,12 @@ Before proposing any name, you must audit the competitor landscape across two ke
 3. **Phonetic Texture:** Pay attention to how the lips and tongue move. If saying the name feels like chewing gravel, reject it.
 4. **Cultural Depth:** Great names draw on architecture, mythology, literature, astronomy, geography, and craft—not just the Silicon Valley bubble.
 
+---
+
+## 7. The Banned Domain Cop-Outs (No Modifier Hacks)
+
+Never propose a name and then claim it is "domain verified" because an awkward modifier domain is available:
+- **Strictly Banned:** Claiming `get{brand}.com`, `{brand}hq.com`, `{brand}app.com`, `try{brand}.com`, or `use{brand}.com` counts as clearing domain viability.
+- **The Golden Rule:** If a candidate name's exact `.com` is taken by an active competitor AND all clean modern extensions (`.ai`, `.io`, `.app`) are taken, **the name is DEAD**. Discard it immediately. 
+- Founders want clean brand names with clean, authentic domains (`.com`, `.ai`, `.io`, `.app`). Never compromise with hack suffixes.
+

@@ -33,7 +33,7 @@ REGISTRY_PRICING = {
     'pro': {'retail_min': 16, 'retail_max': 25, 'currency': 'USD', 'category': 'Professional gTLD'},
 }
 
-DEFAULT_TLDS = ['com', 'ai', 'io', 'co', 'app', 'dev', 'so']
+DEFAULT_TLDS = ['com', 'ai', 'io', 'app', 'co', 'so', 'dev', 'xyz']
 DEFAULT_ACTION_MODIFIERS = ['get', 'use', 'try']
 DEFAULT_ENTITY_MODIFIERS = ['hq', 'app', 'labs']
 
@@ -254,29 +254,28 @@ def check_domain(domain):
     }
 
 
-def generate_candidate_domains(brand_name):
-    """Generates the strategic domain suite according to the startup playbook."""
+def generate_candidate_domains(brand_name, include_modifiers=False):
+    """Generates clean exact-match domains across core TLDs by default."""
     slug = re.sub(r'[^a-zA-Z0-9-]', '', brand_name.lower())
     suite = []
 
-    # 1. Exact match TLDs
+    # 1. Exact match TLDs (The primary priority)
     for tld in DEFAULT_TLDS:
         suite.append({'domain': f"{slug}.{tld}", 'tier': 'Exact Match', 'type': f".{tld}"})
 
-    # 2. Action verbs (.com)
-    for verb in DEFAULT_ACTION_MODIFIERS:
-        suite.append({'domain': f"{verb}{slug}.com", 'tier': 'Action Modifier', 'type': f"{verb}{slug}.com"})
-
-    # 3. Entity / Product anchors (.com)
-    for entity in DEFAULT_ENTITY_MODIFIERS:
-        suite.append({'domain': f"{slug}{entity}.com", 'tier': 'Entity Modifier', 'type': f"{slug}{entity}.com"})
+    # 2. Only include modifier fallback if explicitly requested
+    if include_modifiers:
+        for verb in DEFAULT_ACTION_MODIFIERS:
+            suite.append({'domain': f"{verb}{slug}.com", 'tier': 'Action Modifier (Fallback)', 'type': f"{verb}{slug}.com"})
+        for entity in DEFAULT_ENTITY_MODIFIERS:
+            suite.append({'domain': f"{slug}{entity}.com", 'tier': 'Entity Modifier (Fallback)', 'type': f"{slug}{entity}.com"})
 
     return suite
 
 
-def run_domain_suite(brand_name, max_workers=8):
+def run_domain_suite(brand_name, include_modifiers=False, max_workers=8):
     """Checks all standard brand variations in parallel."""
-    candidates = generate_candidate_domains(brand_name)
+    candidates = generate_candidate_domains(brand_name, include_modifiers=include_modifiers)
     domains_to_check = [c['domain'] for c in candidates]
     domain_tier_map = {c['domain']: c['tier'] for c in candidates}
 
@@ -290,18 +289,33 @@ def run_domain_suite(brand_name, max_workers=8):
 
 
 def print_suite_table(brand_name, results):
-    """Renders a polished, terminal table of results."""
+    """Renders a polished, terminal table of results ordered strictly by TLD hierarchy."""
     print("\n" + "=" * 90)
-    print(f" DOMAIN INTELLIGENCE AUDIT: '{brand_name.upper()}'")
+    print(f" EXACT-MATCH DOMAIN AUDIT: '{brand_name.upper()}'")
     print("=" * 90)
     print(f"{'DOMAIN':<22} | {'STATUS':<15} | {'ESTIMATED COST / PRICING':<32} | {'DETAILS'}")
     print("-" * 90)
 
-    # Sort: AVAILABLE first, then TAKEN_FOR_SALE, then TAKEN_INACTIVE, then TAKEN_ACTIVE
-    priority = {'AVAILABLE': 0, 'TAKEN_FOR_SALE': 1, 'TAKEN_INACTIVE': 2, 'UNKNOWN': 3, 'TAKEN_ACTIVE': 4}
-    sorted_results = sorted(results, key=lambda x: (priority.get(x['status'], 5), x['domain']))
+    # Order priority strictly: .com first, then clean tech TLDs, then others
+    tld_order = {
+        f"{brand_name.lower()}.com": 0,
+        f"{brand_name.lower()}.ai": 1,
+        f"{brand_name.lower()}.io": 2,
+        f"{brand_name.lower()}.app": 3,
+        f"{brand_name.lower()}.co": 4,
+        f"{brand_name.lower()}.so": 5,
+        f"{brand_name.lower()}.dev": 6,
+        f"{brand_name.lower()}.xyz": 7
+    }
 
-    for r in sorted_results:
+    # Separate exact matches from modifiers
+    exact_results = [r for r in results if r.get('tier') == 'Exact Match']
+    modifier_results = [r for r in results if r.get('tier') != 'Exact Match']
+
+    # Sort exact matches by defined TLD hierarchy
+    exact_results = sorted(exact_results, key=lambda x: tld_order.get(x['domain'], 99))
+
+    for r in exact_results:
         status_display = r['status']
         if r['status'] == 'AVAILABLE':
             status_display = "🟢 AVAILABLE"
@@ -314,39 +328,36 @@ def print_suite_table(brand_name, results):
 
         print(f"{r['domain']:<22} | {status_display:<15} | {r['price_est']:<32} | {r['details'][:45]}")
 
+    if modifier_results:
+        print("\n" + "-" * 90)
+        print(" FALLBACK PREFIX/SUFFIX MODIFIERS (Only if exact domain is unavailable)")
+        print("-" * 90)
+        for r in modifier_results:
+            status_display = "🟢 AVAILABLE" if r['status'] == 'AVAILABLE' else "🔴 TAKEN"
+            print(f"{r['domain']:<22} | {status_display:<15} | {r['price_est']:<32} | {r['details'][:45]}")
+
     print("=" * 90)
     
     # Strategic recommendation
-    exact_com = next((r for r in results if r['domain'] == f"{brand_name.lower()}.com"), None)
-    ai_tld = next((r for r in results if r['domain'] == f"{brand_name.lower()}.ai"), None)
-    io_tld = next((r for r in results if r['domain'] == f"{brand_name.lower()}.io"), None)
-    app_tld = next((r for r in results if r['domain'] == f"{brand_name.lower()}.app"), None)
-    avail_modifiers = [r['domain'] for r in results if r['status'] == 'AVAILABLE' and r.get('tier') in ('Action Modifier', 'Entity Modifier')]
+    exact_com = next((r for r in exact_results if r['domain'] == f"{brand_name.lower()}.com"), None)
+    clean_available = [r['domain'] for r in exact_results if r['status'] == 'AVAILABLE' and r['domain'] != f"{brand_name.lower()}.com"]
 
-    print("\nSTRATEGIC DOMAIN RECOMMENDATION:")
+    print("\nSTRATEGIC DOMAIN VERDICT:")
     if exact_com and exact_com['status'] == 'AVAILABLE':
-        print(f"★ UNICORN SCENARIO: Exact-match '{exact_com['domain']}' is UNREGISTERED!")
+        print(f"★ UNICORN SCENARIO: Exact '{exact_com['domain']}' is 100% UNREGISTERED & OPEN!")
         print(f"  Register immediately on Cloudflare or Porkbun for standard retail (~$10-$14/yr).")
     elif exact_com and exact_com['status'] == 'TAKEN_FOR_SALE':
-        print(f"◆ ACQUISITION TARGET: '{exact_com['domain']}' is parked for sale.")
-        print(f"  Action plan: Launch on a modern extension or modifier, then acquire exact .com via anonymous escrow broker.")
-        if avail_modifiers:
-            print(f"  Recommended launch domains: {', '.join(avail_modifiers[:3])}")
+        print(f"◆ ACQUISITION CANDIDATE: Exact '{exact_com['domain']}' is parked for sale ({exact_com['price_est']}).")
+        if clean_available:
+            print(f"  Available Clean Day-1 Launch extensions: {', '.join(clean_available)}")
     else:
-        print(f"▲ STANDARD HIGH-GROWTH PLAYBOOK: Exact .com is actively taken.")
-        recommendations = []
-        if ai_tld and ai_tld['status'] == 'AVAILABLE':
-            recommendations.append(f"{ai_tld['domain']} (AI/Tech frontier)")
-        if io_tld and io_tld['status'] == 'AVAILABLE':
-            recommendations.append(f"{io_tld['domain']} (Developer/SaaS)")
-        if app_tld and app_tld['status'] == 'AVAILABLE':
-            recommendations.append(f"{app_tld['domain']} (App/Web platform)")
-        if avail_modifiers:
-            recommendations.append(f"{avail_modifiers[0]} (Direct action .com)")
-        
-        if recommendations:
-            print(f"  Recommended Day-1 Launch paths: {', '.join(recommendations)}")
-        print(f"  Historical precedents: Dropbox launched on 'getdropbox.com', Linear on 'linear.app', Notion on 'notion.so'.")
+        print(f"⚠️ EXACT .COM IS ACTIVELY TAKEN: '{exact_com['domain'] if exact_com else brand_name + '.com'}' is an active site.")
+        if clean_available:
+            print(f"  Available Clean TLDs: {', '.join(clean_available)}")
+            print(f"  Verdict: You can launch on {clean_available[0]} if the .com company is in an unrelated category.")
+        else:
+            print(f"  Verdict: DISQUALIFIED. All major clean extensions (.com, .ai, .io) are taken.")
+            print(f"  Recommendation: Do not compromise with awkward '-hq' or 'get-' modifiers. Generate a fresh, uncontested name.")
     print("=" * 90 + "\n")
 
 
@@ -354,13 +365,14 @@ def main():
     parser = argparse.ArgumentParser(description="Agency-Grade Domain Intelligence & Availability Checker")
     parser.add_argument("domain", nargs="?", help="Specific domain name to check (e.g. stripe.com)")
     parser.add_argument("--brand", "-b", help="Check the entire strategic domain suite for a brand name (e.g. zenith)")
+    parser.add_argument("--modifiers", "-m", action="store_true", help="Include fallback modifiers (get-, try-, -hq)")
     parser.add_argument("--list", "-l", help="Comma-separated list of domains to check")
     parser.add_argument("--json", "-j", action="store_true", help="Output results in JSON format")
 
     args = parser.parse_args()
 
     if args.brand:
-        results = run_domain_suite(args.brand)
+        results = run_domain_suite(args.brand, include_modifiers=args.modifiers)
         if args.json:
             print(json.dumps({'brand': args.brand, 'results': results}, indent=2))
         else:

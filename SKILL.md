@@ -10,7 +10,7 @@ license: MIT
 
 An agency-grade naming and domain verification engine matching the standards of top-tier branding firms (Lexicon Branding, Wolff Olins, Pentagram, Collins, and Igor).
 
-This skill enforces high-taste, zero-slop naming architectures, runs phonosemantic audits, and executes real-time ICANN domain checks with live pricing across TLDs and strategic modifier suites.
+This skill enforces high-taste, zero-slop naming architectures, runs phonosemantic audits, and executes real-time ICANN domain checks with live pricing across clean exact-match TLDs.
 
 ---
 
@@ -20,7 +20,9 @@ Before generating or evaluating any candidate name, you must strictly reject:
 1. **Suffix Stuffing:** No `-ify` (Taskify), `-ly` (Quickly), `-io` (Brandio), `-sy` (Worksy), `-ix` (Flowix), `-ora` (Taskora).
 2. **Generic Tech Mashups:** No `Smart-`, `Omni-`, `Data-`, `Cloud-`, `Neuro-`, `Synap-`, `Meta-`, `Nexa-`, `Hyper-`, `Intel-` mashed with abstract nouns (`CloudFlow`, `DataPulse`, `OmniSync`, `NeuroCore`).
 3. **Sterile Latin Abstractions:** No `Lumina`, `Apex`, `Nexus`, `Vertex`, `Momentum`, `Catalyst`, `Prism`, `Synergy`, `Zenith`, `Verto`.
-4. **Literal Feature Snoozes:** No `EasyInvoice`, `QuickCode`, `FastForm`.
+4. **Pharmaceutical Synthetic Gibberish:** No names that sound like prescription drugs (*Kyntic, Veltis, Zovio, Novanik, Celura*).
+5. **Literal Feature Snoozes:** No `EasyInvoice`, `QuickCode`, `FastForm`.
+6. **Domain Modifier Hacks (CRITICAL):** Never claim a name is "domain verified" because an awkward prefix/suffix is open (`get{name}.com`, `{name}hq.com`, `{name}app.com`, `try{name}.com`). Founders want clean brand names with clean, authentic domains (`.com`, `.ai`, `.io`, `.app`). If a name's exact `.com` is taken by an active company AND all clean modern TLDs (`.ai`, `.io`, `.app`) are taken, **the name is DEAD**. Discard it immediately.
 
 *For the complete taste filter, read `references/anti_slop_rules.md`.*
 
@@ -32,13 +34,14 @@ Always use the bundled scripts to ensure factual accuracy and avoid hallucinated
 
 | Script | Command | Purpose |
 |---|---|---|
-| **Domain Suite Audit** | `python scripts/check_domain.py --brand <name>` | Audits all core TLDs (`.com`, `.ai`, `.io`, `.app`, `.co`, `.dev`, `.so`) and modifier suites (`get-`, `use-`, `try-`, `-hq`, `-app`, `-labs`) with live socket DNS, RDAP, HTTP parking lander detection, and pricing. |
+| **Candidate Pre-Filter** | `python scripts/filter_candidates.py --names "<c1,c2,c3...>"` | Pre-screens 10-15 candidate names against exact `.com`, `.ai`, `.io`, `.app` in parallel. Automatically filters out dead names so only viable finalists are evaluated. |
+| **Domain Suite Audit** | `python scripts/check_domain.py --brand <name>` | Audits clean exact-match TLDs (`.com`, `.ai`, `.io`, `.app`, `.co`, `.so`, `.dev`, `.xyz`) with live socket DNS, RDAP, HTTP parking lander detection, and real pricing. Modifiers (`-hq`, `get-`) are excluded by default. |
 | **Developer & Social Handles** | `python scripts/check_handles.py <handle>` | Checks availability across GitHub, npm, PyPI, and Crates.io in parallel. |
 | **Trademark Clearance** | `python scripts/check_trademark.py <name> --category <cat>` | Audits Abercrombie distinctiveness spectrum and generates direct USPTO, WIPO, and EUIPO clearance query links. |
 | **Linguistic & Visual Rhythm** | `python scripts/phonetics.py <name>` | Computes trochaic cadence, plosive/fricative profile, Radio Test score (1-10), verb potential, and visual ascender/descender kerning balance. |
 | **Executive Dossier** | `python scripts/generate_report.py --project "<P>" --category "<C>" --brief "<B>" --names "<N1,N2>"` | Assembles an agency-grade executive presentation report with tables and roadmaps. |
 
-*Scripts directory path:* `scripts/check_domain.py`, `scripts/check_handles.py`, `scripts/check_trademark.py`, `scripts/phonetics.py`, `scripts/generate_report.py`.
+*Scripts directory path:* `scripts/check_domain.py`, `scripts/filter_candidates.py`, `scripts/check_handles.py`, `scripts/check_trademark.py`, `scripts/phonetics.py`, `scripts/generate_report.py`.
 
 ---
 
@@ -56,7 +59,7 @@ When the user triggers `/nomik`:
 Run the **Rapid 3-Question Intake Wizard**:
 1. **The Superpower:** What does the product do in one sentence, and what is its core technical or emotional unfair advantage?
 2. **The Tonal Vector:** Who is it for, and what personality should it project? (e.g., Enterprise/Authoritative, Developer/Minimalist, Consumer/Warm, Provocative/Challenger).
-3. **Launch & Budget Constraints:** Do you prefer an available action-modifier `.com` (`get{name}.com`), a modern TLD (`.ai`, `.io`, `.app`), or do you have budget for an aftermarket acquisition?
+3. **Domain Preference:** Is owning the exact `.com` mandatory (Day 1 or via acquisition), or are first-class modern tech extensions (`.ai`, `.io`, `.app`, `.so`) preferred?
 
 ---
 
@@ -69,15 +72,22 @@ Analyze the product, target audience, and competitive landscape:
 - **What are the category clichés?** (e.g. Enterprise blue, sales-pipe jargon).
 - **Where is the Uncontested Quadrant?** Determine the counter-positioning vector (e.g. Warm/Architectural like *Attio* or Human/Conversational like *Folk*).
 
-### Step 2: Generation Across the 7 Agency Taxonomies
-Generate names systematically across the 7 proven disciplines (*read `references/naming_taxonomies.md`*):
-1. **Neologisms & Coined Morphemes:** (e.g. *Pentium, Sonos, Acura, Spotify, Vercel*)
-2. **Real-Word Arbitrary & Transferred:** (e.g. *Apple, Stripe, Slack, Linear, Square, Figma*)
-3. **Evocative & Metaphorical:** (e.g. *Amazon, Safari, Swiffer, Patagonia, Oracle*)
-4. **High-Impact Compounds:** (e.g. *Superhuman, Masterclass, DoorDash, Palantir*)
-5. **Etymological & Classical Roots:** (e.g. *Monzo, Chronos, Meraki, Velo, Kumo*)
-6. **Monosyllabic & Compressed:** (e.g. *Stripe, Arc, Loom, Base, Scale, Ramp*)
+### Step 2: Generation Across the 7 Agency Taxonomies & Candidate Pre-Filter
+Generate 10 to 15 candidate names across the 7 proven disciplines (*read `references/naming_taxonomies.md`*):
+1. **Real-Word Arbitrary & Transferred:** (e.g. *Apple, Stripe, Slack, Linear, Square, Figma, Clerk, Ramp, Slate*)
+2. **Tactile & Sensory Metaphors:** (e.g. *Raycast, Granola, Resend, Railway, PostHog, Loom, Drift*)
+3. **Neologisms & Coined Morphemes:** (e.g. *Vercel, Monzo, Attio, Nomik, Brex, Sonos*)
+4. **High-Impact Compounds:** (e.g. *Superhuman, Masterclass, DoorDash, Tailwind*)
+5. **Etymological & Classical Roots:** (e.g. *Meraki, Velo, Kumo, Astra*)
+6. **Monosyllabic & Compressed:** (e.g. *Arc, Base, Scale, Helm, Stem, Bolt*)
 7. **Provocative & Category-Inverting:** (e.g. *Liquid Death, Oatly, Impossible Foods*)
+
+**Pre-Verification Filter (MANDATORY):**
+Execute:
+`python scripts/filter_candidates.py --names "<cand1,cand2,cand3...>"`
+- Automatically **DISQUALIFY and DISCARD** any candidate where `.com` is taken by an active company AND all clean extensions (`.ai`, `.io`, `.app`) are taken.
+- Select the top 4-5 verified finalists that actually have open or buyable clean domains.
+- **NEVER present a name whose only open domain is an awkward modifier (`-hq`, `get-`).**
 
 ### Step 3: Linguistic & Phonosemantic Vetting
 Run `python scripts/phonetics.py <name>` for each top candidate:
@@ -88,14 +98,14 @@ Run `python scripts/phonetics.py <name>` for each top candidate:
 - **Verb Potential:** Can customers say "Let me [brand] this"?
 *Read `references/phonosemantics.md`.*
 
-### Step 4: Real-Time ICANN Domain Verification
-Execute `python scripts/check_domain.py --brand <name>`:
-- Never guess or assume a domain is available.
-- Categorize availability:
+### Step 4: Real-Time Clean Exact-Match Domain Verification
+Execute `python scripts/check_domain.py --brand <name>` for each finalist:
+- Audits clean exact-match domains (`.com`, `.ai`, `.io`, `.app`, `.co`, `.so`, `.dev`). Modifiers are excluded.
+- Categorize availability with complete transparency:
   - **🟢 AVAILABLE:** Unregistered in registry. Available at standard retail price (~$10-$14/yr for .com, ~$35 for .io, ~$70 for .ai).
   - **🟡 FOR SALE / PARKED:** Resolves to broker lander (Dan, Sedo, Afternic, GoDaddy). Note detected price or negotiation bracket ($1k - $25k+).
   - **⚪ DORMANT / INACTIVE:** Registered in RDAP but has no live web host. Target for private broker outreach.
-  - **🔴 TAKEN (LIVE):** Active operational company.
+  - **🔴 TAKEN (LIVE):** Active operational company. If `.com` is taken by an active company, state clearly what business owns it and whether clean `.ai`/`.io`/`.app` is open.
 *Read `references/domain_playbook.md`.*
 
 ### Step 5: The 7-Pillar Agency Stress-Test Matrix
@@ -106,14 +116,13 @@ Grade every shortlisted name across the 7 pillars (1-10 scale):
 4. **Brand Elasticity:** Can scale into adjacent products without friction.
 5. **Verbification Index:** Natural conversion into an everyday action verb.
 6. **Global Cultural Safety:** Clean across Spanish, French, German, Mandarin, Japanese, Arabic (*read `references/cultural_checks.md`*).
-7. **Domain & Acquisition Viability:** Viable Day-1 launch path + clear long-term .com strategy.
+7. **Clean Domain Viability:** Clear Day-1 clean domain (`.com`, `.ai`, `.io`, `.app`) without hack modifiers.
 
 ### Step 6: Executive Presentation & Acquisition Roadmap
 Deliver a structured dossier for the founder or executive:
 - **The Strategic Angle:** Why this name wins against the competition.
 - **Linguistic Scorecard:** Prosody, phonosemantics, Radio Test results.
-- **Live Domain Audit & Pricing Table:** Real status, renewal costs, and parking lander links.
+- **Live Domain Audit & Pricing Table:** Real status on exact `.com`, `.ai`, `.io`, `.app`.
 - **The Billion-Dollar Launch Roadmap:**
-  - *Option A (Lean Launch):* Launch on modern extension (`.ai`, `.io`, `.app`) or action modifier (`get{brand}.com`).
-  - *Option B (Growth Upgrade):* Anonymous escrow negotiation playbook for exact `.com` post-funding.
-
+  - *Option A (Direct Clean Launch):* Launch on exact `.com` (if open/buyable) or clean modern extension (`.ai`, `.io`, `.app`, `.so`).
+  - *Option B (Growth Upgrade):* Long-term anonymous escrow negotiation playbook for exact `.com` if currently parked.

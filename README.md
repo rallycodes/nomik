@@ -194,7 +194,10 @@ Nomik's engines can be executed directly via `npx` from GitHub or via pure Pytho
 # Complete brand audit (Domains + Handles + Phonetics + Trademarks)
 npx github:rallycodes/nomik <brand>
 
-# Check domains across TLDs (.com, .ai, .io, .app, .co, .so)
+# Pre-screen candidate names in parallel (filters out dead/taken domains)
+npx github:rallycodes/nomik filter <name1,name2,name3>
+
+# Check clean exact-match domains across TLDs (.com, .ai, .io, .app, .co, .so)
 npx github:rallycodes/nomik domain <brand>
 
 # Check developer & social handles (GitHub, npm, PyPI, Crates.io)
@@ -223,7 +226,8 @@ nomik/
 ├── README.md                         # Documentation & install guide
 ├── LICENSE                           # MIT License
 ├── scripts/
-│   ├── check_domain.py               # Live socket DNS, ICANN RDAP & pricing engine
+│   ├── check_domain.py               # Live socket DNS, ICANN RDAP & clean exact-match pricing
+│   ├── filter_candidates.py          # Parallel candidate domain screener & disqualifier
 │   ├── check_handles.py              # GitHub, npm, PyPI, and Crates.io checker
 │   ├── check_trademark.py            # USPTO/WIPO trademark knockout screener
 │   ├── phonetics.py                  # Phonosemantic & visual letterform auditor
@@ -232,17 +236,11 @@ nomik/
 │   ├── naming_taxonomies.md          # In-depth breakdown of the 7 agency disciplines
 │   ├── anti_slop_rules.md            # Zero-tolerance blacklist of AI clichés & contrast matrix
 │   ├── phonosemantics.md             # Cognitive linguistics of sound symbolism
-│   ├── domain_playbook.md            # The billion-dollar startup launch playbook
+│   ├── domain_playbook.md            # The modern startup launch & acquisition playbook
 │   └── cultural_checks.md            # Global cross-language linguistic safety audit
 └── evals/
     └── evals.json                    # Benchmark test suites across B2B, consumer & luxury
 ```
-│   ├── anti_slop_rules.md            # Blacklist of clichés, suffixes & 2x2 contrast matrix
-│   ├── phonosemantics.md             # Cognitive linguistics of sound symbolism
-│   ├── domain_playbook.md            # How unicorns launch & acquire domains
-│   └── cultural_checks.md            # Global cross-language linguistic safety audit
-└── evals/
-    └── evals.json                    # Benchmark test suites across B2B, consumer & luxury
 ```
 
 ---

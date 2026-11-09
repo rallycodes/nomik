@@ -149,6 +149,7 @@ function printHelp() {
   \x1b[36mnpx github:rallycodes/nomik install\x1b[0m        Install /nomik skill into AI agents globally
   \x1b[36mnpx github:rallycodes/nomik update\x1b[0m         Update Nomik skill to the latest version
   \x1b[36mnpx github:rallycodes/nomik domain <brand>\x1b[0m Check exact domains & pricing across TLDs
+  \x1b[36mnpx github:rallycodes/nomik filter <names>\x1b[0m Pre-screen candidate names by domain viability
   \x1b[36mnpx github:rallycodes/nomik handles <brand>\x1b[0mCheck GitHub, npm, PyPI, and Crates.io handles
   \x1b[36mnpx github:rallycodes/nomik tm <brand>\x1b[0m     Run trademark knockout clearance check
   \x1b[36mnpx github:rallycodes/nomik phonetics <brand>\x1b[0m Score phonosemantics, cadence & visual rhythm
@@ -191,6 +192,16 @@ function main() {
     } else {
       runPython('check_domain.py', ['--brand', brand]);
     }
+    return;
+  }
+
+  if (command === 'filter' || command === 'screen') {
+    const names = args.slice(1).join(',');
+    if (!names) {
+      console.error('Error: specify candidate names separated by commas (e.g. npx nomik filter kyntic,nomik,raycast)');
+      process.exit(1);
+    }
+    runPython('filter_candidates.py', ['--names', names]);
     return;
   }
 
