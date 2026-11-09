@@ -5,7 +5,7 @@
 <br/>
 
 [![skills.sh](https://img.shields.io/badge/skills.sh-nomik-000000?style=flat-square&logo=codeforces&logoColor=white)](https://skills.sh)
-[![npm](https://img.shields.io/badge/npm-nomik-000000?style=flat-square&logo=npm&logoColor=white)](https://www.npmjs.com/package/nomik)
+[![install](https://img.shields.io/badge/install-npx%20github%3Arallycodes%2Fnomik-000000?style=flat-square&logo=github&logoColor=white)](https://github.com/rallycodes/nomik)
 [![author](https://img.shields.io/badge/author-raul%20aliyev%20(%40rallycodes)-000000?style=flat-square)](https://github.com/rallycodes)
 [![license](https://img.shields.io/badge/license-MIT-000000?style=flat-square)](LICENSE)
 [![standard](https://img.shields.io/badge/standard-zero--slop-000000?style=flat-square)](references/anti_slop_rules.md)
@@ -23,40 +23,40 @@
 
 </div>
 
-## ⚡ Instant CLI & Agent Install
+## ⚡ Instant Install & Global Usage
 
-### Option A: Run Instantly via `npx` (No installation needed)
-Audit any brand name, domain, social handle, and trademark instantly in your terminal:
-```bash
-npx nomik <brand>
-```
-*Example: `npx nomik kyntic` or `npx nomik stripe.com`*
-
-### Option B: Install the `/nomik` Skill into AI Agents
+### 1. Install the `/nomik` Skill into AI Agents (One command)
 Install Nomik globally so typing **`/nomik`** triggers the full agency in **Claude Code**, **Antigravity**, **Cursor**, or **Codex**:
-```bash
-# Using npx nomik installer
-npx nomik install
 
-# Or using the open skills package manager
+```bash
+# Direct GitHub runner (Works everywhere, zero npm account needed)
+npx github:rallycodes/nomik install
+
+# Or using the universal skills package manager
 npx skills add rallycodes/nomik -g -y
 ```
 
-### Option C: Global npm Install
-```bash
-npm install -g nomik
-nomik <brand>
-```
-
 Once installed, simply type **`/nomik`** in your AI chat:
-> `/nomik` -> Launches the interactive 3-question naming wizard  
-> `/nomik high-performance distributed key-value store in Rust` -> Executes full 6-step agency pipeline  
-> `/nomik audit kyntic` -> Instantly runs domains, handles, phonetics, and trademark check  
+> `/nomik` → Launches the interactive 3-question naming wizard  
+> `/nomik high-performance distributed key-value store in Rust` → Executes full 6-step agency pipeline  
+> `/nomik audit kyntic` → Instantly runs domains, handles, phonetics, and trademark check  
 
-### Updating Nomik
+---
+
+### 2. Run Directly in Terminal (No installation needed)
+Audit any brand name, domain, social handle, and trademark instantly without installing anything:
+
+```bash
+npx github:rallycodes/nomik <brand>
+```
+*Example: `npx github:rallycodes/nomik kyntic` or `npx github:rallycodes/nomik stripe.com`*
+
+---
+
+### 3. Updating Nomik
 Keep your local skill and CLI synchronized with the latest agency updates with one command:
 ```bash
-npx nomik update
+npx github:rallycodes/nomik update
 ```
 *(Or `npx skills update` across your entire agent suite).*
 
@@ -188,26 +188,26 @@ Every candidate name is graded on a 1–10 scale:
 
 ## 💻 Standalone CLI Tools
 
-Nomik's engines can be executed directly via `npx` or pure Python with zero external dependencies:
+Nomik's engines can be executed directly via `npx` from GitHub or via pure Python with zero external dependencies:
 
 ```bash
 # Complete brand audit (Domains + Handles + Phonetics + Trademarks)
-npx nomik <brand>
+npx github:rallycodes/nomik <brand>
 
 # Check domains across TLDs (.com, .ai, .io, .app, .co, .so)
-npx nomik domain <brand>
+npx github:rallycodes/nomik domain <brand>
 
 # Check developer & social handles (GitHub, npm, PyPI, Crates.io)
-npx nomik handles <brand>
+npx github:rallycodes/nomik handles <brand>
 
 # Legal trademark knockout screening & Nice classification links
-npx nomik tm <brand>
+npx github:rallycodes/nomik tm <brand>
 
 # Phonosemantic, cadence & visual letterform rhythm
-npx nomik phonetics <brand>
+npx github:rallycodes/nomik phonetics <brand>
 
 # Install /nomik skill into AI agents globally
-npx nomik install
+npx github:rallycodes/nomik install
 ```
 
 ---

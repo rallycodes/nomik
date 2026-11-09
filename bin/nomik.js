@@ -145,19 +145,19 @@ function updateSkill() {
 function printHelp() {
   printBanner();
   console.log(`\x1b[1mCOMMANDS:\x1b[0m
-  \x1b[36mnpx nomik <brand>\x1b[0m              Run full audit (Domains + Handles + Phonetics + Trademarks)
-  \x1b[36mnpx nomik install\x1b[0m              Install /nomik skill into AI agents globally
-  \x1b[36mnpx nomik update\x1b[0m               Update Nomik skill to the latest version
-  \x1b[36mnpx nomik domain <brand>\x1b[0m       Check exact domains & pricing across TLDs
-  \x1b[36mnpx nomik handles <brand>\x1b[0m      Check GitHub, npm, PyPI, and Crates.io handles
-  \x1b[36mnpx nomik tm <brand>\x1b[0m           Run trademark knockout clearance check
-  \x1b[36mnpx nomik phonetics <brand>\x1b[0m    Score phonosemantics, cadence & visual rhythm
+  \x1b[36mnpx github:rallycodes/nomik <brand>\x1b[0m        Run full audit (Domains + Handles + Phonetics + TM)
+  \x1b[36mnpx github:rallycodes/nomik install\x1b[0m        Install /nomik skill into AI agents globally
+  \x1b[36mnpx github:rallycodes/nomik update\x1b[0m         Update Nomik skill to the latest version
+  \x1b[36mnpx github:rallycodes/nomik domain <brand>\x1b[0m Check exact domains & pricing across TLDs
+  \x1b[36mnpx github:rallycodes/nomik handles <brand>\x1b[0mCheck GitHub, npm, PyPI, and Crates.io handles
+  \x1b[36mnpx github:rallycodes/nomik tm <brand>\x1b[0m     Run trademark knockout clearance check
+  \x1b[36mnpx github:rallycodes/nomik phonetics <brand>\x1b[0m Score phonosemantics, cadence & visual rhythm
 
 \x1b[1mEXAMPLES:\x1b[0m
-  npx nomik kyntic
-  npx nomik stripe.com
-  npx nomik install
-  npx nomik update
+  npx github:rallycodes/nomik kyntic
+  npx github:rallycodes/nomik stripe.com
+  npx github:rallycodes/nomik install
+  npx github:rallycodes/nomik update
 `);
 }
 
