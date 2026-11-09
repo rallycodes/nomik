@@ -66,8 +66,8 @@ npx nomik update
 
 Before this skill had a name, it was an unnamed, ruthless naming engine built to eliminate AI slop. 
 
-We gave the engine its own brief:
-> *"Name an agency-grade brand naming, domain intelligence, and phonosemantics skill that rivals Lexicon Branding and Pentagram. No cheap portmanteaus. No -ify. Must pass the Radio Test with verified open domains."*
+We gave the engine a simple prompt:
+> *"Name this branding skill. Make it short, punchy, memorable, and make sure the domains are actually open."*
 
 The engine generated 5 candidate finalists across its 7 taxonomies (*Callsign, Onoma, NameFoundry, Morpheme, Nomik*).
 
