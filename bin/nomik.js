@@ -17,11 +17,9 @@ const SCRIPTS_DIR = path.join(ROOT_DIR, 'scripts');
 
 function printBanner() {
   console.log(`
-\x1b[38;2;168;85;247m  █▄ █ █▀█ █▀▄▀█ █ █▄▀\x1b[0m
-\x1b[38;2;99;102;241m  █ ▀█ █▄█ █ ▀ █ █ █ █\x1b[0m
-\x1b[1m\x1b[37m  N O M I K\x1b[0m \x1b[90m— Billion-Dollar Brand Naming & Domain Engine\x1b[0m
-\x1b[38;2;16;185;129m  ● The AI skill that named itself\x1b[0m \x1b[90m• by Raul Aliyev (@rallycodes)\x1b[0m
-`);
+\x1b[1m\x1b[37mnomik\x1b[0m \x1b[90mv1.5.0\x1b[0m
+\x1b[90mThe agency brand naming & domain intelligence engine\x1b[0m
+\x1b[90mCreated by Raul Aliyev (@rallycodes) • The AI that named itself\x1b[0m`);
 }
 
 function runPython(scriptName, args = []) {

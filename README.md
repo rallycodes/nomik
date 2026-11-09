@@ -4,12 +4,12 @@
 
 <br/>
 
-[![Skills.sh](https://img.shields.io/badge/skills.sh-nomik-10B981?style=for-the-badge&logo=codeforces&logoColor=white)](https://skills.sh)
-[![Created by Raul Aliyev](https://img.shields.io/badge/Author-Raul%20Aliyev%20(%40rallycodes)-8B5CF6?style=for-the-badge)](https://github.com/rallycodes)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
-[![Zero AI Slop](https://img.shields.io/badge/AI%20Slop-ZERO%20TOLERANCE-red?style=for-the-badge)](references/anti_slop_rules.md)
-[![ICANN RDAP](https://img.shields.io/badge/ICANN%20RDAP-REAL--TIME-purple?style=for-the-badge)](scripts/check_domain.py)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-3776AB.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![skills.sh](https://img.shields.io/badge/skills.sh-nomik-000000?style=flat-square&logo=codeforces&logoColor=white)](https://skills.sh)
+[![npm](https://img.shields.io/badge/npm-nomik-000000?style=flat-square&logo=npm&logoColor=white)](https://www.npmjs.com/package/nomik)
+[![author](https://img.shields.io/badge/author-raul%20aliyev%20(%40rallycodes)-000000?style=flat-square)](https://github.com/rallycodes)
+[![license](https://img.shields.io/badge/license-MIT-000000?style=flat-square)](LICENSE)
+[![standard](https://img.shields.io/badge/standard-zero--slop-000000?style=flat-square)](references/anti_slop_rules.md)
+[![icann](https://img.shields.io/badge/icann-rdap%20live-000000?style=flat-square)](scripts/check_domain.py)
 
 <p align="center">
   <b>Created by <a href="https://github.com/rallycodes">Raul Aliyev (@rallycodes)</a></b><br>
