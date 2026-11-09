@@ -1,0 +1,48 @@
+{
+  "name": "nomik",
+  "version": "1.0.0",
+  "description": "Billion-dollar brand naming agency in a single agent skill and CLI. Cognitive phonosemantics, zero AI slop, and real-time ICANN domain verification with live pricing.",
+  "main": "bin/nomik.js",
+  "bin": {
+    "nomik": "bin/nomik.js"
+  },
+  "files": [
+    "bin",
+    "scripts",
+    "references",
+    "evals",
+    "SKILL.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node bin/nomik.js",
+    "test": "node bin/nomik.js audit test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rallycodes/nomik.git"
+  },
+  "keywords": [
+    "agent-skills",
+    "brand-naming",
+    "branding",
+    "domain-checker",
+    "phonetics",
+    "claude-code",
+    "antigravity",
+    "ai-agents",
+    "startup-tools",
+    "domain-names",
+    "linguistics"
+  ],
+  "author": "Raul Aliyev <raliyevinfo@gmail.com> (https://github.com/rallycodes)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rallycodes/nomik/issues"
+  },
+  "homepage": "https://github.com/rallycodes/nomik#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

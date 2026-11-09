@@ -85,7 +85,16 @@ def query_whois_socket(domain, tld):
         'org': 'whois.pir.org',
         'io': 'whois.nic.io',
         'ai': 'whois.nic.ai',
-        'co': 'whois.nic.co'
+        'co': 'whois.nic.co',
+        'so': 'whois.nic.so',
+        'app': 'whois.nic.google',
+        'dev': 'whois.nic.google',
+        'xyz': 'whois.nic.xyz',
+        'tech': 'whois.nic.tech',
+        'me': 'whois.nic.me',
+        'pro': 'whois.nic.pro',
+        'design': 'whois.nic.design',
+        'studio': 'whois.nic.studio',
     }
     server = servers.get(tld)
     if not server:
@@ -104,9 +113,14 @@ def query_whois_socket(domain, tld):
         s.close()
         text = response.decode('utf-8', errors='ignore')
         lower_text = text.lower()
-        if 'no match for' in lower_text or 'not found' in lower_text or 'domain not found' in lower_text:
+        not_found_signals = [
+            'no match for', 'not found', 'domain not found',
+            'the queried object does not exist', 'no object found',
+            'status: free', 'is free', 'available', 'no data found'
+        ]
+        if any(sig in lower_text for sig in not_found_signals):
             return {'registered': False}
-        if 'domain name:' in lower_text or 'registry domain id:' in lower_text or 'creation date:' in lower_text:
+        if 'domain name:' in lower_text or 'registry domain id:' in lower_text or 'creation date:' in lower_text or 'status: active' in lower_text:
             return {'registered': True, 'raw': text[:200]}
     except Exception:
         pass
@@ -307,7 +321,7 @@ def print_suite_table(brand_name, results):
     ai_tld = next((r for r in results if r['domain'] == f"{brand_name.lower()}.ai"), None)
     io_tld = next((r for r in results if r['domain'] == f"{brand_name.lower()}.io"), None)
     app_tld = next((r for r in results if r['domain'] == f"{brand_name.lower()}.app"), None)
-    avail_modifiers = [r['domain'] for r in results if r['status'] == 'AVAILABLE' and r['tier'] in ('Action Modifier', 'Entity Modifier')]
+    avail_modifiers = [r['domain'] for r in results if r['status'] == 'AVAILABLE' and r.get('tier') in ('Action Modifier', 'Entity Modifier')]
 
     print("\nSTRATEGIC DOMAIN RECOMMENDATION:")
     if exact_com and exact_com['status'] == 'AVAILABLE':

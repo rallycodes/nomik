@@ -18,6 +18,8 @@ if SCRIPT_DIR not in sys.path:
 
 from check_domain import check_domain, run_domain_suite
 from phonetics import audit_name
+from check_handles import check_all_handles
+from check_trademark import audit_trademark
 
 
 def generate_executive_proposal(project_name, category, description, candidates, output_file=None):
@@ -59,11 +61,17 @@ def generate_executive_proposal(project_name, category, description, candidates,
         ling = audit_name(name)
         # Domain suite analysis
         domains = run_domain_suite(name)
+        # Handles analysis
+        handles = check_all_handles(name)
+        # Trademark analysis
+        trademark = audit_trademark(name, category)
 
         audit_results.append({
             'meta': c,
             'linguistic': ling,
-            'domains': domains
+            'domains': domains,
+            'handles': handles,
+            'trademark': trademark
         })
 
     # Render each candidate card
@@ -71,6 +79,8 @@ def generate_executive_proposal(project_name, category, description, candidates,
         c = item['meta']
         ling = item['linguistic']
         domains = item['domains']
+        handles = item['handles']
+        tm = item['trademark']
         name = c['name']
 
         report_lines.append(f"### {idx}. {name.upper()}")
@@ -79,16 +89,17 @@ def generate_executive_proposal(project_name, category, description, candidates,
         report_lines.append(f"**Tonal Vector:** {c.get('tone')}\n")
 
         # Linguistic table
-        report_lines.append("#### Linguistic Scorecard")
+        report_lines.append("#### 1. Linguistic & Visual Rhythm Scorecard")
         report_lines.append("| Dimension | Rating | Analysis |")
         report_lines.append("|---|---|---|")
         report_lines.append(f"| **The Radio Test** | {ling['radio_test']['radio_score']}/10 | {', '.join(ling['radio_test']['flags'][:2])} |")
         report_lines.append(f"| **Verbification** | {ling['verbification']['verb_score']}/10 | {ling['verbification']['sample_usage']} |")
+        report_lines.append(f"| **Visual Letterform** | {ling['visual_rhythm']['visual_score']}/10 | {ling['visual_rhythm']['balance']} |")
         report_lines.append(f"| **Sound Profile** | {ling['phonosemantics']['vowel_profile'][:30]}... | {ling['phonosemantics']['traits'][0]} |")
         report_lines.append("\n")
 
         # Domain table
-        report_lines.append("#### Live Domain Intelligence & Pricing")
+        report_lines.append("#### 2. Live Domain Intelligence & Pricing")
         report_lines.append("| Domain | Status | Est. Cost / Retail | Notes |")
         report_lines.append("|---|---|---|---|")
 
@@ -102,6 +113,21 @@ def generate_executive_proposal(project_name, category, description, candidates,
                     "⚪ Dormant" if d['status'] == 'TAKEN_INACTIVE' else "🔴 Live Site"
             report_lines.append(f"| `{d['domain']}` | {badge} | {d['price_est']} | {d['details'][:40]} |")
         report_lines.append("\n")
+
+        # Handles table
+        report_lines.append("#### 3. Developer & Social Handles")
+        report_lines.append("| Registry / Platform | Type | Status | Link |")
+        report_lines.append("|---|---|---|---|")
+        for h in handles:
+            h_badge = "🟢 Available" if h['status'] == 'AVAILABLE' else "🔴 Taken" if h['status'] == 'TAKEN' else "⚪ Unknown"
+            report_lines.append(f"| **{h['platform']}** | {h['type']} | {h_badge} | [{h['url']}]({h['url']}) |")
+        report_lines.append("\n")
+
+        # Trademark Clearance section
+        report_lines.append("#### 4. Trademark Clearance Screening")
+        report_lines.append(f"• **Distinctiveness:** [{tm['distinctiveness']['grade']}] {tm['distinctiveness']['level']}  ")
+        report_lines.append(f"• **Legal Risk Assessment:** {tm['distinctiveness']['legal_risk']}  ")
+        report_lines.append(f"• **Direct Register Links:** [USPTO Search]({tm['clearance_links']['uspto_search']}) | [WIPO Global Brand]({tm['clearance_links']['wipo_global_brand']}) | [EUIPO eSearch]({tm['clearance_links']['euipo_esearch']})\n")
 
         # Launch recommendation
         avail_com = next((d for d in domains if d['domain'] == f"{name.lower()}.com" and d['status'] == 'AVAILABLE'), None)
@@ -137,7 +163,7 @@ def main():
     args = parser.parse_args()
 
     candidates = []
-    if os.path.exists(args.names):
+    if os.path.isfile(args.names):
         with open(args.names, 'r', encoding='utf-8') as f:
             candidates = json.load(f)
     else:

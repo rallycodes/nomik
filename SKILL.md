@@ -28,16 +28,35 @@ Before generating or evaluating any candidate name, you must strictly reject:
 
 ## Bundled Deterministic Scripts
 
-Always use the bundled scripts to ensure factual accuracy and avoid hallucinated domain availability:
+Always use the bundled scripts to ensure factual accuracy and avoid hallucinated availability:
 
 | Script | Command | Purpose |
 |---|---|---|
-| **Domain Suite Audit** | `python scripts/check_domain.py --brand <name>` | Checks all core TLDs (`.com`, `.ai`, `.io`, `.app`, `.co`, `.dev`, `.so`) and modifier suites (`get-`, `use-`, `try-`, `-hq`, `-app`, `-labs`) with live socket DNS, RDAP, HTTP parking lander detection, and pricing. |
-| **Single Domain Check** | `python scripts/check_domain.py <domain>` | Checks specific registration, live status, and price estimate. |
-| **Linguistic & Phonetics** | `python scripts/phonetics.py <name>` | Computes syllable count, trochaic/monosyllabic cadence, vowel brightness, plosive/fricative profile, Radio Test score (1-10), and verb potential. |
+| **Domain Suite Audit** | `python scripts/check_domain.py --brand <name>` | Audits all core TLDs (`.com`, `.ai`, `.io`, `.app`, `.co`, `.dev`, `.so`) and modifier suites (`get-`, `use-`, `try-`, `-hq`, `-app`, `-labs`) with live socket DNS, RDAP, HTTP parking lander detection, and pricing. |
+| **Developer & Social Handles** | `python scripts/check_handles.py <handle>` | Checks availability across GitHub, npm, PyPI, and Crates.io in parallel. |
+| **Trademark Clearance** | `python scripts/check_trademark.py <name> --category <cat>` | Audits Abercrombie distinctiveness spectrum and generates direct USPTO, WIPO, and EUIPO clearance query links. |
+| **Linguistic & Visual Rhythm** | `python scripts/phonetics.py <name>` | Computes trochaic cadence, plosive/fricative profile, Radio Test score (1-10), verb potential, and visual ascender/descender kerning balance. |
 | **Executive Dossier** | `python scripts/generate_report.py --project "<P>" --category "<C>" --brief "<B>" --names "<N1,N2>"` | Assembles an agency-grade executive presentation report with tables and roadmaps. |
 
-*Scripts directory path:* `scripts/check_domain.py`, `scripts/phonetics.py`, `scripts/generate_report.py`.
+*Scripts directory path:* `scripts/check_domain.py`, `scripts/check_handles.py`, `scripts/check_trademark.py`, `scripts/phonetics.py`, `scripts/generate_report.py`.
+
+---
+
+## The `/nomik` Slash Command Workflow
+
+When the user triggers `/nomik`:
+
+### 1. Direct Argument Provided (e.g. `/nomik <name>` or `/nomik <idea>`):
+- **If a specific candidate name or domain is given** (e.g. `/nomik stripe.com` or `/nomik audit kyntic`):
+  Execute `check_domain.py`, `check_handles.py`, `phonetics.py`, and `check_trademark.py` immediately.
+- **If a product idea or description is given** (e.g. `/nomik high-performance Rust key-value store`):
+  Execute the 6-Step Agency Naming Pipeline directly without delay.
+
+### 2. Standalone `/nomik` (No Arguments):
+Run the **Rapid 3-Question Intake Wizard**:
+1. **The Superpower:** What does the product do in one sentence, and what is its core technical or emotional unfair advantage?
+2. **The Tonal Vector:** Who is it for, and what personality should it project? (e.g., Enterprise/Authoritative, Developer/Minimalist, Consumer/Warm, Provocative/Challenger).
+3. **Launch & Budget Constraints:** Do you prefer an available action-modifier `.com` (`get{name}.com`), a modern TLD (`.ai`, `.io`, `.app`), or do you have budget for an aftermarket acquisition?
 
 ---
 

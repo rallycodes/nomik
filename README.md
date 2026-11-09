@@ -29,18 +29,35 @@
 
 </div>
 
-## ⚡ One-Line Global Install
+## ⚡ Instant CLI & Agent Install
 
-Install Nomik globally in one second across all your AI agent environments (**Claude Code**, **Antigravity**, **Cursor**, **Codex**, **Gemini CLI**):
-
+### Option A: Run Instantly via `npx` (No installation needed)
+Audit any brand name, domain, social handle, and trademark instantly in your terminal:
 ```bash
+npx nomik <brand>
+```
+*Example: `npx nomik kyntic` or `npx nomik stripe.com`*
+
+### Option B: Install the `/nomik` Skill into AI Agents
+Install Nomik globally so typing **`/nomik`** triggers the full agency in **Claude Code**, **Antigravity**, **Cursor**, or **Codex**:
+```bash
+# Using npx nomik installer
+npx nomik install
+
+# Or using the open skills package manager
 npx skills add rallycodes/nomik -g -y
 ```
 
-Once installed, your AI agent automatically inherits elite branding agency powers. Just ask:
-> *"Help me name a high-performance transactional database in Rust and verify all candidate domains."*  
-> *"Audit the name 'Kyntic' for phonetics and check if the .ai or .io domain is taken."*  
-> *"Check domain availability and pricing for my SaaS."*
+### Option C: Global npm Install
+```bash
+npm install -g nomik
+nomik <brand>
+```
+
+Once installed, simply type **`/nomik`** in your AI chat:
+> `/nomik` -> Launches the interactive 3-question naming wizard  
+> `/nomik high-performance distributed key-value store in Rust` -> Executes full 6-step agency pipeline  
+> `/nomik audit kyntic` -> Instantly runs domains, handles, phonetics, and trademark check  
 
 ---
 
@@ -150,20 +167,26 @@ Every candidate name is graded on a 1–10 scale:
 
 ## 💻 Standalone CLI Tools
 
-Nomik's Python engines can also be run directly from your terminal with zero external dependencies:
+Nomik's engines can be executed directly via `npx` or pure Python with zero external dependencies:
 
 ```bash
-# Check complete domain suite for any brand name
-python scripts/check_domain.py --brand acme
+# Complete brand audit (Domains + Handles + Phonetics + Trademarks)
+npx nomik <brand>
 
-# Check a single domain
-python scripts/check_domain.py stripe.com
+# Check domains across TLDs (.com, .ai, .io, .app, .co, .so)
+npx nomik domain <brand>
 
-# Audit linguistic phonetics, cadence, and Radio Test
-python scripts/phonetics.py Sonos
+# Check developer & social handles (GitHub, npm, PyPI, Crates.io)
+npx nomik handles <brand>
 
-# Generate a complete C-suite executive naming report
-python scripts/generate_report.py --project "Aether" --category "DevTools" --brief "Fast KV store" --names "Kyntic,Veloq"
+# Legal trademark knockout screening & Nice classification links
+npx nomik tm <brand>
+
+# Phonosemantic, cadence & visual letterform rhythm
+npx nomik phonetics <brand>
+
+# Install /nomik skill into AI agents globally
+npx nomik install
 ```
 
 ---
@@ -172,15 +195,27 @@ python scripts/generate_report.py --project "Aether" --category "DevTools" --bri
 
 ```
 nomik/
-├── SKILL.md                          # Master agent instructions & system prompt
+├── package.json                      # npm package configuration
+├── bin/
+│   └── nomik.js                      # npx / npm CLI entry point
+├── SKILL.md                          # Master agent instructions & /nomik workflow
 ├── README.md                         # Documentation & install guide
 ├── LICENSE                           # MIT License
 ├── scripts/
-│   ├── check_domain.py               # Multi-threaded domain checker & pricing engine
-│   ├── phonetics.py                  # Phonosemantic, Radio Test & cadence auditor
+│   ├── check_domain.py               # Live socket DNS, ICANN RDAP & pricing engine
+│   ├── check_handles.py              # GitHub, npm, PyPI, and Crates.io checker
+│   ├── check_trademark.py            # USPTO/WIPO trademark knockout screener
+│   ├── phonetics.py                  # Phonosemantic & visual letterform auditor
 │   └── generate_report.py            # Executive C-suite dossier generator
 ├── references/
 │   ├── naming_taxonomies.md          # In-depth breakdown of the 7 agency disciplines
+│   ├── anti_slop_rules.md            # Zero-tolerance blacklist of AI clichés & contrast matrix
+│   ├── phonosemantics.md             # Cognitive linguistics of sound symbolism
+│   ├── domain_playbook.md            # The billion-dollar startup launch playbook
+│   └── cultural_checks.md            # Global cross-language linguistic safety audit
+└── evals/
+    └── evals.json                    # Benchmark test suites across B2B, consumer & luxury
+```
 │   ├── anti_slop_rules.md            # Blacklist of clichés, suffixes & 2x2 contrast matrix
 │   ├── phonosemantics.md             # Cognitive linguistics of sound symbolism
 │   ├── domain_playbook.md            # How unicorns launch & acquire domains

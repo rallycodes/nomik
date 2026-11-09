@@ -172,13 +172,74 @@ def evaluate_verbification(word, syllables):
     }
 
 
+ASCENDERS = {'b', 'd', 'f', 'h', 'k', 'l', 't'}
+DESCENDERS = {'g', 'j', 'p', 'q', 'y'}
+NEUTRAL_GLYPHS = {'a', 'c', 'e', 'i', 'm', 'n', 'o', 'r', 's', 'u', 'v', 'w', 'x', 'z'}
+
+VISUAL_TRAPS = [
+    ('rn', 'Looks like "m" in tight typography/kerning'),
+    ('cl', 'Looks like "d" in sans-serif fonts'),
+    ('vv', 'Looks like "w" in modern tracking'),
+    ('ill', 'Contains dense vertical bars (i-l-l), causing visual legibility clutter'),
+    ('lli', 'Contains dense vertical bars (l-l-i), causing visual legibility clutter')
+]
+
+
+def audit_visual_rhythm(word):
+    """
+    Audits visual letterform rhythm, ascender/descender balance, kerning traps,
+    and typographic symmetry for brand logo readability.
+    """
+    w = word.lower().strip()
+    asc_count = sum(1 for ch in w if ch in ASCENDERS)
+    desc_count = sum(1 for ch in w if ch in DESCENDERS)
+    neutral_count = sum(1 for ch in w if ch in NEUTRAL_GLYPHS)
+
+    score = 10.0
+    flags = []
+
+    # Check for visual traps
+    for trap, reason in VISUAL_TRAPS:
+        if trap in w:
+            score -= 1.5
+            flags.append(f"Visual Trap: '{trap}' - {reason}")
+
+    # Check for palindrome symmetry
+    is_palindrome = w == w[::-1] and len(w) > 2
+    if is_palindrome:
+        score += 1.0
+        flags.append(f"Perfect Palindrome Symmetry (like Sonos) - Exceptional typographic balance")
+
+    # Ratio balance
+    total = max(1, len(w))
+    if asc_count > 0 and desc_count > 0:
+        balance = "Dynamic (Both Ascenders & Descenders give vertical architectural rhythm)"
+    elif asc_count > 0 and desc_count == 0:
+        balance = "Upward / Clean (Ascenders with zero descenders creates a crisp flat baseline)"
+    elif desc_count > 0 and asc_count == 0:
+        balance = "Grounded (Descenders anchor the baseline)"
+    else:
+        balance = "Monolithic / Minimalist (Pure x-height characters create seamless geometric rhythm)"
+
+    final_score = max(1.0, min(10.0, score))
+    return {
+        'visual_score': round(final_score, 1),
+        'ascenders': asc_count,
+        'descenders': desc_count,
+        'balance': balance,
+        'is_palindrome': is_palindrome,
+        'flags': flags if flags else ["Optimal typographic clarity, zero kerning traps"]
+    }
+
+
 def audit_name(word):
-    """Runs complete linguistic and prosodic audit for a single candidate name."""
+    """Runs complete linguistic, prosodic, and visual letterform audit for a candidate name."""
     clean_word = word.strip()
     syllables = estimate_syllables(clean_word)
     phonosemantics = analyze_phonosemantics(clean_word)
     radio = evaluate_radio_test(clean_word)
     verb = evaluate_verbification(clean_word, syllables)
+    visual = audit_visual_rhythm(clean_word)
 
     cadence = "Monosyllabic (Punchy & Direct)" if syllables == 1 else \
               "Trochaic (Strong-Weak: Optimal Brand Cadence)" if syllables == 2 else \
@@ -191,7 +252,8 @@ def audit_name(word):
         'character_length': len(clean_word),
         'radio_test': radio,
         'phonosemantics': phonosemantics,
-        'verbification': verb
+        'verbification': verb,
+        'visual_rhythm': visual
     }
 
 
@@ -201,6 +263,7 @@ def print_audit_report(data):
     radio = data['radio_test']
     ps = data['phonosemantics']
     verb = data['verbification']
+    visual = data['visual_rhythm']
 
     print("\n" + "=" * 80)
     print(f" LINGUISTIC & PHONOSEMANTIC AUDIT: '{name.upper()}'")
@@ -209,6 +272,7 @@ def print_audit_report(data):
     print(f"Character Length : {data['character_length']} letters")
     print(f"Radio Test Score : {radio['radio_score']}/10 {'[PASSED]' if radio['passed_radio_test'] else '[CAUTION]'}")
     print(f"Verb Potential   : {verb['verb_score']}/10 -> {verb['sample_usage']}")
+    print(f"Visual Letterform: {visual['visual_score']}/10 ({visual['balance']})")
     print("-" * 80)
     print("PHONOSEMANTIC PROFILE (Sound Symbolism):")
     print(f"  • Plosives (/b, p, t, d, k, g/): {ps['plosive_count']}")
@@ -218,6 +282,11 @@ def print_audit_report(data):
     print(f"  • Psychological Associations:")
     for t in ps['traits']:
         print(f"    - {t}")
+    print("-" * 80)
+    print("TYPOGRAPHY & LETTERFORM RHYTHM:")
+    print(f"  • Ascenders: {visual['ascenders']} | Descenders: {visual['descenders']}")
+    for flag in visual['flags']:
+        print(f"  • {flag}")
     print("-" * 80)
     print("SPELLING & AUDIO FRICTION (Radio Test Details):")
     for flag in radio['flags']:
