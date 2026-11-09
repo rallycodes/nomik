@@ -1,0 +1,28 @@
+{
+  "skill_name": "brand-naming",
+  "description": "Evaluations for testing agency-grade brand naming, domain intelligence, and linguistic audits.",
+  "evals": [
+    {
+      "id": 1,
+      "name": "developer-infrastructure-database",
+      "prompt": "I'm building an ultra-fast, distributed transactional key-value database for AI agents and edge runtimes. It needs to feel like SQLite meets Redis, but built in Rust for extreme reliability. Category incumbents are Redis, DynamoDB, SurrealDB, Dragonfly. I need a brand name that avoids cheap AI slop like 'DataFlow' or 'RedisLite'. Check domain availability and pricing.",
+      "expected_output": "A set of agency-grade names across the 7 disciplines with category contrast analysis, phonetic audits, and real-time domain verification showing status and pricing.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "consumer-fintech-wealth",
+      "prompt": "We are launching a new consumer investment app for Gen Z that automates algorithmic index investing and high-yield cash accounts. We want to avoid boring corporate names like Wealthfront or Betterment, but also avoid juvenile slop like 'Cashly' or 'Investify'. What should we name it? Verify all candidate domains.",
+      "expected_output": "High-taste names with warm/human or architectural tone, passing the Radio Test, with domain status across .com, .app, .co, action modifiers, and clear pricing.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "sustainable-luxury-apparel",
+      "prompt": "I need a brand name for a high-end luxury outerwear brand using regenerative ocean wool and waterproof technical membrane. Needs to rival Patagonia, Arc'teryx, and Moncler, but feel minimalist and modern. Absolutely no cheesy greenwashing names like 'EcoWarm' or 'GreenThread'. Check domains and tell me how much they cost.",
+      "expected_output": "Sophisticated evocative or classical root names with authoritative phonetics (back vowels, liquids), Radio Test scores, and verified domain availability with retail and aftermarket pricing.",
+      "files": []
+    }
+  ]
+}
+
