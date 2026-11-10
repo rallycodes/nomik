@@ -84,9 +84,11 @@ The rhythmic beat of a brand name dictates how easily it flows through everyday 
 
 **Rule:** If a prospective customer hears the brand name once on a podcast, over the phone, or in a bustling coffee shop, can they type the exact URL into their browser without asking *"How do you spell that?"*
 
-### Fatal Violations of The Radio Test:
+### Common sources of spelling friction
 1. **C vs. K Ambiguity:** Starting with a hard "C" when people expect "K" or vice versa (*Kova* vs *Cova*).
-2. **Dropped Vowel Fad:** Dropping vowels at the end (*Flickr, Tumblr, Scribd*). You will lose 20% of your traffic to typos.
+2. **Dropped Vowels:** List the conventional spellings a listener may type (*Flickr, Tumblr, Scribd*).
 3. **Ph vs. F Confusion:** Using "Ph" for modern software (*Phonic* vs *Fonic*).
 4. **Homophone Traps:** Names that sound identical to common words with conflicting spellings (*Pear* vs *Pair*).
+
+Use the script score to flag candidates for closer review. Evaluate plausible spellings and what users find when they search them. Document actual listener results separately from desk-based estimates. See [product and collision audit](product-and-collision-audit.md).
 

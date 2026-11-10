@@ -1,5 +1,5 @@
 {
-  "skill_name": "brand-naming",
+  "skill_name": "nomik",
   "description": "Evaluations for testing agency-grade brand naming, domain intelligence, and linguistic audits.",
   "evals": [
     {
@@ -13,7 +13,7 @@
       "id": 2,
       "name": "consumer-fintech-wealth",
       "prompt": "We are launching a new consumer investment app for Gen Z that automates algorithmic index investing and high-yield cash accounts. We want to avoid boring corporate names like Wealthfront or Betterment, but also avoid juvenile slop like 'Cashly' or 'Investify'. What should we name it? Verify all candidate domains.",
-      "expected_output": "High-taste names with warm/human or architectural tone, passing the Radio Test, with domain status across .com, .app, .co, action modifiers, and clear pricing.",
+      "expected_output": "Names with warm or architectural tone, spelling checks, and sourced availability and prices for the relevant exact domains. Unverified fields are labeled.",
       "files": []
     },
     {
@@ -21,6 +21,20 @@
       "name": "sustainable-luxury-apparel",
       "prompt": "I need a brand name for a high-end luxury outerwear brand using regenerative ocean wool and waterproof technical membrane. Needs to rival Patagonia, Arc'teryx, and Moncler, but feel minimalist and modern. Absolutely no cheesy greenwashing names like 'EcoWarm' or 'GreenThread'. Check domains and tell me how much they cost.",
       "expected_output": "Sophisticated evocative or classical root names with authoritative phonetics (back vowels, liquids), Radio Test scores, and verified domain availability with retail and aftermarket pricing.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "single-root-exact-domain-evidence",
+      "prompt": "Our app helps people discover jobs, compare CV fit, and track applications. It may grow into a network for people who are already employed. I said one word, no two-word combinations. Audit these four mock candidates without going online. Use only the supplied domain evidence. Budget is US$25 per year, exact .com or .app. WorkNest joins work and nest and has a confirmed $12 .com registration and renewal. Candidel is a single-root coinage from candidate and its .com has no registry record, with no registrar result. Employen is a single-root coinage from employ and has a confirmed $12 .app registration and $18 renewal. Vocarel is a single-root coinage from vocation, with a confirmed $4 first year and $48 renewal for its .app. Compare them and choose a leader.",
+      "expected_output": "Rejects WorkNest structurally, marks Candidel's purchase and budget pending, and excludes Vocarel under the renewal cap. Gives Employen as the domain-and-structure leader while comparing immediate category recognition and fit for an employed member. Keeps supplied fixture evidence distinct from live verification.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "platform-fit-near-name-collision",
+      "prompt": "Rank all three fictional names for our job-search app as we expand into public professional profiles, referrals, and an employer portal. Current UI says 'Ask [Name]' and the roadmap includes 'Find me on [Name]' and '[Name] for Employers'. Treat these fixtures as the only research. All three have a confirmed exact .app registration and renewal within budget. Jobseeker is a dictionary word and immediately clear today. Profelle scores 10/10 in the spelling script, but three of four English listeners typed Profel, an active recruitment platform with a live mark for hiring software in our launch market. Vocarev has a weaker immediate jobs cue, and the supplied English exact-name and likely-spelling search found no relevant nearby business. Give a reason to keep, reserve, hold, or eliminate each. Discuss UI, SEO, global use, and what still needs checking.",
+      "expected_output": "Explains each disposition and compares Vocarev and Jobseeker for present and future use. Prioritizes observed misspellings and relevant market use over Profelle's score and domain quote. Separates branded findability from category SEO, copy substitution from rendering, and English evidence from broader language or trademark coverage.",
       "files": []
     }
   ]

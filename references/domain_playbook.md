@@ -1,81 +1,27 @@
-# The Billion-Dollar Startup Domain Playbook
-*How High-Growth Companies Secure, Launch, and Acquire World-Class Domains*
+# Domain evidence and pricing
 
-A dangerous amateur fallacy persists in startup lore: that you must own the exact `word.com` before you write a single line of code or launch to customers.
+## Scope the lookup
 
-In reality, almost none of today's iconic decacorns owned their exact `.com` on Day 1. They used a staged, strategic acquisition roadmap.
+Build domains from the actual candidate and the permitted extensions. If the user allows an exact `.com` or `.app`, a quote on either can qualify. If they require both, verify both. Check extra TLDs or aftermarket options only when useful within the brief. A modified domain can be explored separately if the user explicitly wants alternatives.
 
----
+Use `python scripts/check_domain.py --list "name.com,name.app" --json` for screening. Inspect the underlying evidence when the result affects the shortlist. DNS, redirects, and parking pages help identify use or a possible sale. Confirm registration status with the authoritative registry's RDAP or another supported registration-data service. [ICANN Lookup](https://lookup.icann.org/en/faq)
 
-## 1. How the Giants Actually Launched
+## Keep the evidence separate
 
-| Brand | Day-1 Launch Domain | When They Upgraded | What They Paid | Strategy / Insight |
-|---|---|---|---|---|
-| **Dropbox** | `getdropbox.com` | After Series A (2009) | ~$300,000 | Used action modifier `get-` to launch lean. Bought `.com` when cash was abundant. |
-| **Stripe** | `devpay.com` → `stripe.com` | Pre-launch pivot | ~$30,000 | Rebranded from DevPay; acquired `stripe.com` from a domain investor before public launch. |
-| **Linear** | `linear.app` | Active on `.app` | Standard renewal | Embraced `.app` as a badge of design pedigree and modern native performance. |
-| **Notion** | `notion.so` | 2021 (Decacorn status) | Undisclosed (Est. $1M+) | Operated on Somalia's `.so` ccTLD for nearly a decade; customers loved the aesthetic. |
-| **Figma** | `figma.com` | Day 1 (Coined) | Standard retail (~$10) | Chose an invented, coined word with an available `.com` from the start. |
-| **Basecamp** | `37signals.com` / `basecamp.com` | Rebranded company to product | Private acquisition | Named product first, rebranded entire parent holding company later. |
-| **Vercel** | `zeit.co` → `vercel.com` | Major rebrand (2020) | Private acquisition | Rebranded when expanding beyond initial deployment tooling. |
-| **Perplexity**| `perplexity.ai` | Active on `.ai` | Standard ccTLD | Made `.ai` the primary standard for modern AI search. |
+| Evidence | What to report |
+|---|---|
+| Authoritative lookup returns a registration record | Registered. Describe active use, parking, or a for-sale listing only if separately observed. |
+| Authoritative lookup returns a valid no-record result | No registration record found. Registrar availability and price remain pending until checked. |
+| Timeout, rate limit, unsupported lookup, ambiguous response, or inconclusive DNS | Unknown. Retry through a relevant authoritative source if practical. |
+| Registrar offers the exact domain for registration | Quote the registrar, link, check date, currency, initial term and total, renewal when shown, and any visible required fees. Mark missing fields as unverified. |
+| Registrar lists a premium, reserved, or unavailable name | Record the registrar result. Check another registrar or the registry if sources disagree. Preserve both findings if unresolved. |
+| Marketplace or owner explicitly offers the exact domain | Record the asking price or “inquiry only” and the source. Keep acquisition cost separate from recurring costs. |
 
----
+Use the exact result for the domain. A generic TLD price card, a script's `price_est`, a quote on another extension, or an estimated negotiation range cannot establish an exact price. Compare the initial term and renewal on equivalent terms and flag a discounted first year or a required multi-year purchase. If the user sets a recurring budget and renewal is missing, mark budget fit pending.
 
-## 2. The 3-Tier Domain Architecture
+For larger lists, screen in batches, then obtain exact quotes for the candidates whose eligibility depends on price. Report each name's evidence tier and the counts checked. Refresh the leader's evidence before presenting a final recommendation if the quotes may be stale.
 
-### Tier 1: Exact Match `.com` (The Gold Standard)
-- **Status:** Unregistered ($10-$14/yr) OR Parked Aftermarket ($2k - $100k+).
-- **Reality:** If the exact `.com` is unregistered, register it immediately. If it is parked, evaluate the owner and valuation before negotiating.
+## Acquisition options
 
-### Tier 2: Premium Modern ccTLDs & gTLDs
-- **`.ai` (Anguilla):** The uncontested standard for AI platforms and frontier tech (~$65-$85/yr).
-- **`.io` (Indian Ocean):** The developer and API standard (~$35-$48/yr).
-- **`.app` (Google Registry):** Enforces HSTS HTTPS by default; perfect for web/mobile software (~$14-$18/yr).
-- **`.dev` (Google Registry):** Dedicated developer ecosystem (~$14-$18/yr).
-- **`.co` (Colombia):** Shorter, clean alternative to `.com` (~$25-$35/yr).
-- **`.so` (Somalia):** Minimalist modern darling made famous by Notion (~$28-$38/yr).
-
-### ⚠️ Why Modifiers (`get-`, `-hq`, `-app`) Are Deprecated in 2026
-In early 2010s tech, startups occasionally launched on `getdropbox.com` or `bufferhq.com` before raising funding.
-Today, high-growth founders and customers universally reject modifier hacks:
-- Suffix/prefix modifiers look second-rate, spammy, and convey weak brand confidence.
-- First-class modern extensions (`.ai`, `.io`, `.app`, `.co`, `.so`) are vastly preferred over compromised `.com` hacks:
-  - *Linear* launched on `linear.app` (not *linearhq.com*).
-  - *Perplexity* launched on `perplexity.ai` (not *getperplexity.com*).
-  - *Notion* launched on `notion.so` (not *notionapp.com*).
-  - *Dub* launched on `dub.co` (not *trydub.com*).
-- **Agency Rule:** Never present `{brand}hq.com` or `get{brand}.com` as "domain verified" for a founder. If exact `.com` is taken and clean modern TLDs (`.ai`, `.io`, `.app`) are also taken, **the name is DISQUALIFIED**. Generate a fresh, uncontested candidate.
-
----
-
-## 3. Aftermarket Acquisition & Negotiation Tactics
-
-If the exact `.com` is owned by a domain investor or squatter:
-
-### Rule 1: Never Inquire From a Corporate Email
-- If you email from `founder@acmesoftware.ai` after raising a $3M seed round, the domain price will magically jump from $2,500 to $150,000.
-- Use a personal Gmail, an anonymous broker, or a burner buyer persona.
-
-### Rule 2: Inspect the Lander First
-- **Is it parked on Sedo, Dan.com, Afternic, or GoDaddy?**
-  - Look for a "Buy It Now" (BIN) price. BIN prices are often lower than brokered negotiations because the owner set a fixed price years ago.
-- **Is it completely dormant (no DNS)?**
-  - Use WHOIS or RDAP registrar contact info to submit an anonymous opening inquiry.
-
-### Rule 3: Anchoring & Offer Structure
-- Start with an initial anchor at 20-30% of your maximum budget.
-- Use exact, odd numbers (e.g. *$2,350* instead of *$2,000*). Odd numbers psychologically signal a firm, calculated budget limit.
-- Always use **Escrow.com** for transactions over $1,000 to prevent fraud and wire scams.
-
----
-
-## 4. Trademark & UDRP Protection (Uniform Domain Dispute)
-
-- **Do Not Cybersquat:** Never choose a name confusingly similar to an existing trademark in your category.
-- **UDRP Defense:** Under ICANN UDRP rules, a trademark owner can only seize a domain if they prove:
-  1. The domain is identical or confusingly similar to their mark.
-  2. The registrant has no rights or legitimate interests.
-  3. The domain was registered and is being used in bad faith.
-- If you coined an original word and registered it in good faith before someone else filed a trademark, your domain is protected.
+When aftermarket is within scope, compare a listed buy-now price with the user's ceiling. For an inquiry-only or dormant domain, label any acquisition as speculative. If the user wants a negotiation plan, include the cost ceiling, a way to verify ownership and transfer, and escrow or a reputable marketplace for settlement. Get authorization before contacting a seller, placing an offer, or registering a domain.
 

@@ -88,10 +88,7 @@ Before proposing any name, you must audit the competitor landscape across two ke
 
 ---
 
-## 7. The Banned Domain Cop-Outs (No Modifier Hacks)
+## 7. Exact domains
 
-Never propose a name and then claim it is "domain verified" because an awkward modifier domain is available:
-- **Strictly Banned:** Claiming `get{brand}.com`, `{brand}hq.com`, `{brand}app.com`, `try{brand}.com`, or `use{brand}.com` counts as clearing domain viability.
-- **The Golden Rule:** If a candidate name's exact `.com` is taken by an active competitor AND all clean modern extensions (`.ai`, `.io`, `.app`) are taken, **the name is DEAD**. Discard it immediately. 
-- Founders want clean brand names with clean, authentic domains (`.com`, `.ai`, `.io`, `.app`). Never compromise with hack suffixes.
+Apply the exact extensions and budget in the brief. Modifier domains such as `get{brand}.com` and `{brand}hq.com` cannot satisfy an exact-domain requirement. Use [domain evidence and pricing](domain_playbook.md) to distinguish a confirmed failure from an incomplete lookup.
 
